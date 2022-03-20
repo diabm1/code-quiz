@@ -1,0 +1,41 @@
+body { margin: 0; }
+header {
+	padding: 5px;
+	background: forestgreen;
+	color: white;
+	display: flex;
+	justify-content: space-around;
+	align-items: center;
+}
+main {
+	display: table;
+	margin: 10px auto;
+}
+ol { padding: 0; }
+#game button {
+	width: 150px;
+	transition: 0.25s;
+	margin: 2px 0;
+	cursor: pointer;
+}
+#game button:hover {
+	background: forestgreen;
+	color: white;
+}
+section {
+	text-align: center;
+}
+#start, #game, #end {
+    display: none;
+}
+.start #start{
+    display: block;
+}
+
+.game #game {
+    display: block;
+}
+
+.end #end {
+    display: block;
+}
