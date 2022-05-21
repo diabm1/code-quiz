@@ -5,6 +5,7 @@
 body{
 	max-width: 800px;
 	margin: 0 auto;
+	font-family: Arial, Helvetica, sans-serif;
 }
 header{
 	/* border: 1px solid black; */
@@ -18,6 +19,31 @@ main {
 .hide{
 	display: none;
 }
-
-
+#container{
+	border: 1px;width:200px;
+	position: absolute;
+	top:80px;
+	left:35%;
+}
+.answerButton {
+	background-color: blue;
+	font-size: larger;
+	color:white;
+	height: 30px;
+	width:200px;
+	display: inline-block;
+	text-align: left;
+	padding-left: 10px;
+	margin-bottom: 5px;
+}
+#message{
+	position: relative;
+	top:200px;
+	left:33%;
+	width: 400px;
+	color: gray;
+	font-style: italic;
+	font-size: larger;
+	text-align: left;
+}
 
