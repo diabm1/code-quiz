@@ -1,41 +1,101 @@
-body { margin: 0; }
+* {
+  margin: 0;
+  padding: 0;
+}
+body {
+  max-width: 800px;
+  margin: 0 auto;
+  font-family: Arial, Helvetica, sans-serif;
+}
 header {
-	padding: 5px;
-	background: forestgreen;
-	color: white;
-	display: flex;
-	justify-content: space-around;
-	align-items: center;
+  /* border: 1px solid black; */
+  display: flex;
+  justify-content: space-between;
 }
 main {
-	display: table;
-	margin: 10px auto;
+  /* border: 1px solid black; */
+  text-align: center;
 }
-ol { padding: 0; }
-#game button {
-	width: 150px;
-	transition: 0.25s;
-	margin: 2px 0;
-	cursor: pointer;
+.hide {
+  display: none;
 }
-#game button:hover {
-	background: forestgreen;
-	color: white;
+#container {
+  border: 1px;
+  width: 200px;
+  position: absolute;
+  top: 80px;
+  left: 35%;
 }
-section {
-	text-align: center;
+.answerButton {
+  background-color: blue;
+  font-size: larger;
+  color: white;
+  height: 30px;
+  width: 200px;
+  display: inline-block;
+  text-align: left;
+  padding-left: 10px;
+  margin-bottom: 5px;
 }
-#start, #game, #end {
-    display: none;
+/* #quizScreen{
+	display: flex;
+    height: 200px;
+    flex-direction: column;
+} */
+#message {
+  position:absolute;
+  top: 350px;
+  left: 33%;
+  width: 400px;
+  color: gray;
+  font-style: italic;
+  font-size: larger;
+  text-align: left;
 }
-.start #start{
-    display: block;
+#highScores {
+  text-decoration: none;
+  color: #b84fe5;
 }
-
-.game #game {
-    display: block;
+#title {
+  font-family: Arial, Helvetica, sans-serif;
+  font-size: 40px;
+  margin: 30px;
 }
-
-.end #end {
-    display: block;
+#title-text {
+  font-size: x-large;
+  margin-bottom: 30px;
+}
+#startScreen {
+  margin-top: 70px;
+}
+#start {
+  font-size: 20px;
+  padding: 10px;
+  padding-left: 30px;
+  padding-right: 30px;
+  background-color: #351b75;
+  color: #ffffff;
+  border-radius: 10px;
+}
+#start:hover {
+  background-color: #b84fe5;
+  opacity: 0.6;
+  transition: 0.3s;
+  cursor: pointer;
+}
+.answerButton {
+  font-size: 20px;
+  padding: 10px;
+  padding-left: 20px;
+  padding-right: 30px;
+  padding-bottom: 30px;
+  background-color: #351b75;
+  color: #ffffff;
+  border-radius: 10px;
+}
+.answerButton:hover {
+  background-color: #b84fe5;
+  opacity: 0.6;
+  transition: 0.3s;
+  cursor: pointer;
 }

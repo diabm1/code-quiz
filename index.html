@@ -1,38 +1,47 @@
 <!DOCTYPE html>
 <html>
+
 <head>
 	<meta charset="utf-8">
 	<meta name="viewport" content="width=device-width">
 	<title>Trivia Game</title>
-    <link rel="stylesheet" href="./asset/style.css">
+	<link rel="stylesheet" href="./asset/style.css">
 </head>
+
 <body>
-	<header>
-		<h1>Quiz!</h1>
-		<p>Time Remaining: <span id="time">0</span></p>
+	<header><a href="javascript:showHighScores();" id="highScores">View high scores</a>
+		<div>
+			Time: <span class="time" id="spanTimer">0</span>
+		</div>
 	</header>
-	<main class="start">
-		<section id="start">
-			<button>Start Game</button>
-			<h2>High Scores:</h2>
-			<ol></ol>
-		</section>
-		<section id="game">
-			<h2></h2>
-			<ol>
-				<li><button></button></li>
-				<li><button></button></li>
-				<li><button></button></li>
-				<li><button></button></li>
-			</ol>
-		</section>
-		<section id="end">
-			<h3>Game Over!</h3>
-			<h2>Your Score: <span id="score">0</span></h2>
-			<input placeholder="Your Name" />
-			<button>Save Score</button>
-		</section>
+	<main id="startScreen">
+		<h2 id="title">Coding Quiz Challenge</h2>
+		<p id="title-text">Try to answer the following code-related questions within the time limit. Keep in mind
+			that incorrect answers
+			will penalize your score/time by ten seconds!</p>
+		<button id="start">Start Quiz</button>
+
 	</main>
-    <script src="./asset/script.js"></script>
+	<main id="quizScreen" class="hide">
+		<h2 id="questionText"></h2>
+		<div id="container"></div> <!-- answer buttons appear -->
+		<div id="message"></div>
+	</main>
+	<main id="endScreen" class="hide">
+		<h2>Game Over!</h2>
+		<label for="input">Initials</label>
+		<input id="initials" type="text">
+		<button id="submit">Submit</button>
+	</main>
+	<main id="displayHighScores" class="hide">
+		<h2>High Scores</h2>
+		<div id="highScore">
+
+		</div>
+		<button id="btnGoBack">Go Back</button>
+		<button id="btnClearHighScore">Clear High Score</button>
+	</main>
+	<script src="./asset/script.js"></script>
 </body>
+
 </html>

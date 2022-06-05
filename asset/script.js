@@ -1,184 +1,186 @@
-//model
-//--settings
-const timeAllowedPerQuestion = 5,
-	  timePenalty = 5,
-	  correctAnswerBonus = 10,
-	  localStorageLabel = "triviagame";
-
-//--data
-const quesArr = [
-	{
-		question: "What is the answer?",
-		answers: [
-			"Wrong",
-			"Correct!",
-			"Incorrect",
-			"Very Wrong"
-		],
-		answer: 1 //index of correct answer in answers array
-	},
-	{
-		question: "Do you know the answer?",
-		answers: [
-			"Wrong",
-			"Incorrect",
-			"Very Wrong",
-			"Correct!"
-		],
-		answer: 3
-	}
+//when start button is clicked timer starts then I am presented with a question
+var btn = document.querySelector("button");
+const btnGoBack = document.getElementById("btnGoBack");
+const btnClearHighScore = document.getElementById("btnClearHighScore");
+var intervalID;
+var questionsArray = [
+  {
+    text: "Commonly used data types DO Not Include:",
+    choices: ["strings", "booleans", "alerts", "numbers"],
+    answer: "alerts",
+  },
+  {
+    text: "The condition in an if / else statement is enclosed with ________.",
+    choices: ["quotes", "curly brackets", "parenthesis", "square brackets"],
+    answer: "paranthesis",
+  },
+  {
+    text: "Arrays in JavaScript can be used to store ________.",
+    choices: [
+      "numbers and strings",
+      "other arrays",
+      "booleans",
+      "all of the above",
+    ],
+    answer: "all of the above",
+  },
+  {
+    text: "String values must be enclosed within ________ when being assigned to variables.",
+    choices: ["commas", "curly brackets", "quotes", "parenthesis"],
+    answer: "quotes",
+  },
+  {
+    text: "A very useful tool used during development and debugging for printing content to the debugger is:",
+    choices: ["JavaScript", "terminal/bash", "for loops", "console.log"],
+    answer: "console.log",
+  },
 ];
+btnClearHighScore.addEventListener("click", function () {
+  localStorage.removeItem("userAndScore");
+});
+btnGoBack.addEventListener("click", function () {
+  document.getElementById("container").style.display = "block";
+  document.getElementById("highScore").innerHTML = "";
+  document.getElementById("displayHighScores").style.display = "none";
+});
+btn.addEventListener("click", function () {
+  var startScreen = document.querySelector("#startScreen");
+  var quizScreen = document.querySelector("#quizScreen");
 
-//--app state variables
-var currentQuestionIndex, correctAnswers, timer, timeRemaining, score;
+  startScreen.setAttribute("class", "hide");
+  quizScreen.removeAttribute("class", "hide");
 
-//--model functions
-function reset() {
-	currentQuestionIndex = 0;
-	correctAnswers = 0;
-	timeRemaining = timeAllowedPerQuestion * quesArr.length;
-	score = 0;
-}
-function getHighScores() {
-	const data = localStorage.getItem(localStorageLabel);
-	if (!data) return [];
-	return JSON.parse(data);
-}
-function setHighScores(data) {
-	localStorage.setItem(localStorageLabel, JSON.stringify(data));
-}
+  buildQuesCard();
+});
 
+let displayQues = 0;
+let countDown = 60;
 
+function buildQuesCard() {
+  var questionText = document.getElementById("questionText");
+  questionText.textContent = questionsArray[displayQues].text; //text == question
+  var container = document.getElementById("container");
 
-//view
-function showCurrentQuestion() {
-	let q = quesArr[currentQuestionIndex];
-	document.querySelector("#game h2").textContent = q.question;
-	document.querySelectorAll("#game button").forEach((b, i) => {
-		b.textContent = q.answers[i];
-	});
-}
-function changeView() {
-	const main = document.querySelector("main"),
-		  state = main.className;
-          console.log(state, "state")
-	switch(state) {
-		case "start":
-			main.className = "game";
-			break;
-		case "game":
-			main.className = "end";
-			break;
-		case "end":
-			main.className = "start";
-			break;
-	}
-}
-function viewTime() {
-	document.querySelector("#time").textContent = timeRemaining;
-}
-function viewScore() {
-	document.querySelector("#score").textContent = score;
-}
-function viewHighScores() {
-    // debugger;
-	// const data = getHighScores();
-	// document.querySelector("#highscores").innerHTML = data?.map(({name, score}) => `
-	// 	<li>${score}: ${name}</li>
-	// `).join("");
+  intervalID = setInterval(myCallback, 10000);
+  var timer = document.querySelector(".time");
+
+  function myCallback() {
+    timer.textContent = countDown;
+    if (countDown === 0) {
+      clearInterval(intervalID);
+      showEndScreen();
+    }
+    countDown--;
+    document.getElementById("spanTimer").innerHTML = countDown;
+  }
+    let i = 1;
+    questionsArray[displayQues].choices.forEach(function (choice) {
+      var button = document.createElement("button");
+      button.textContent = i + ". " + choice;
+      button.setAttribute("value", choice);
+      i++;
+      button.className = "answerButton";
+      button.onclick = evaluateAnswer;
+      container.appendChild(button);
+    });
+  
+  
 }
 
+function evaluateAnswer() {
+  if (this.value == questionsArray[displayQues].answer) {
+    
+    document.getElementById("message").innerHTML = "<hr/>Correct!";
+    //add something here to go to next set of answers but hide previous answers
+    countDown++;
+  } else {
+    document.getElementById("message").innerHTML = "<hr/>Incorrect!";
+    //add something here to go to next set of answers but hide previous answers
+    countDown--;
+  }
 
+  //button.onClick = evaluateAnser && go to next question. Cycle through the object above how
 
-
-//controller
-function init() {
-	//view changing
-	document.querySelector("#start button").addEventListener("click", startGame);
-	// const [saveButton, cancelButton] = document.querySelectorAll("#end button");
-	// saveButton.addEventListener("click", saveHighScore);
-	// cancelButton.addEventListener("click", changeView);
-	//assign controller to answer buttons
-	document.querySelectorAll("#game button").forEach(b => {
-		b.addEventListener("click", handleAnswer);
-	});
-	//high scores
-	viewHighScores();
-    console.log("hello")
-}
-function handleAnswer(event) {
-	//event.target is the button clicked
-	//event.target.dataset.index is the data-index attribute
-    console.log("hello")
-	let answerIndex = Number(event.target.dataset.index);
-	let q = quesArr[currentQuestionIndex];
-	if (answerIndex === q.answer) {
-		//correct answer!
-		correctAnswers++;
-		score += correctAnswerBonus;
-	}
-	else {
-		//incorrect answer
-		timeRemaining -= timePenalty;
-	}
-	currentQuestionIndex++;
-	//are there more questions?
-	if (quesArr[currentQuestionIndex]) showCurrentQuestion();
-	else endGame();
-}
-function startGame() {
-	reset();
-	startTimer();
-	showCurrentQuestion();
-	changeView();
-}
-function endGame() {
-	stopTimer();
-	changeView();
-	if (timeRemaining > 0) score += timeRemaining;
-	viewScore();
-}
-function saveHighScore() {
-	const name = document.querySelector("#name").value.trim();
-	let data = getHighScores();
-	data.push({name, score});
-	data.sort((a, b) => b.score - a.score);
-	//data = data.slice(0, 5);
-	setHighScores(data);
-	viewHighScores();
-	changeView();
-}
-function startTimer() {
-	viewTime();
-	// timer = setInterval(tick, 1000);
-}
-function stopTimer() {
-	clearInterval(timer);
-}
-function tick() {
-	timeRemaining = Math.max(0, timeRemaining - 1);
-	viewTime();
-	if (!timeRemaining) endGame();
+  if (displayQues < questionsArray.length - 1) {
+    displayQues++;
+    var questionText = document.getElementById("questionText");
+    questionText.textContent = questionsArray[displayQues].text;
+  } else {
+    clearInterval(intervalID);
+    showEndScreen();
+  }
 }
 
+function saveToLocalStorage() {
+  var input = document.getElementById("initials");
+  var timer = document.querySelector(".time");
+  let userScores;
+  const localStorageData = localStorage.getItem("userAndScore");
+  if (localStorageData === null) {
+    userScores = [];
+  } else {
+    try {
+      userScores = JSON.parse(localStorageData);
+    } catch {
+      userScores = [];
+    }
+  }
+  // console.log(input.value);
+  var userAndScore = {
+    initials: input.value.trim(),
+    time: timer.innerHTML.trim(),
+  };
+  userScores.push(userAndScore);
+  localStorage.setItem("userAndScore", JSON.stringify(userScores));
+  showHighScores();
+}
 
+function showHighScores() {
+  //  jQuery $("#startScreen").hide();
+  //get items from local storage
+  const highScoreData = localStorage.getItem("userAndScore");
+  if (highScoreData == null) {
+    alert("No high scores found");
+    //document.getElementById("displayHighScores").innerHTML="<h1>None</h1>";
+    return;
+  }
+  var highScoreScreen = document.querySelector("#displayHighScores");
+  var endScreen = document.querySelector("#endScreen");
+  highScoreScreen.removeAttribute("class", "hide");
+  endScreen.setAttribute("class", "hide");
+  document.getElementById("startScreen").style.display = "none";
+  document.getElementById("container").style.display = "none";
+  document.getElementById("message").innerHTML = "";
+  document.getElementById("displayHighScores").style.display = "block";
+  const listOfScores = JSON.parse(highScoreData);
+  const highScoreId = document.getElementById("highScore");
+  //iterate through it
+  for (let i = 0; i < listOfScores.length; i++) {
+    const newDiv = document.createElement("div");
+    const newContent = document.createTextNode(
+      listOfScores[i].initials + ":" + listOfScores[i].time
+    );
+    newDiv.appendChild(newContent);
+    // console.log(listOfScores[i])
+    console.log(newDiv);
+    highScoreId.appendChild(newDiv);
+  }
 
-init();
+  //create element forEach
+  //attach child to high scores id
+}
 
+function showEndScreen() {
+  var quizScreen = document.querySelector("#quizScreen");
+  var endScreen = document.querySelector("#endScreen");
 
+  quizScreen.setAttribute("class", "hide");
+  endScreen.removeAttribute("class", "hide");
 
+  var submit = document.getElementById("submit");
+  submit.onclick = saveToLocalStorage;
 
+  //display endScreen
+}
 
-
-
-
-
-
-
-
-
-
-
-
-
-
+//testing git
