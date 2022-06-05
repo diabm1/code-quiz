@@ -1,22 +1,30 @@
 <!DOCTYPE html>
 <html>
+
 <head>
 	<meta charset="utf-8">
 	<meta name="viewport" content="width=device-width">
 	<title>Trivia Game</title>
-    <link rel="stylesheet" href="./asset/style.css">
+	<link rel="stylesheet" href="./asset/style.css">
 </head>
+
 <body>
-	<header><a href="javascript:showHighScores();">View high scores</a>
-		Time: <span class="time" id="spanTimer">0</span></header>
+	<header><a href="javascript:showHighScores();" id="highScores">View high scores</a>
+		<div>
+			Time: <span class="time" id="spanTimer">0</span>
+		</div>
+	</header>
 	<main id="startScreen">
-		<h2>Coding Quiz Challenge</h2>
-		<p>Try to answer the following code-related questions within the time limit. Keep in mind that incorrect answers will penalize your score/time by ten seconds!</p>
+		<h2 id="title">Coding Quiz Challenge</h2>
+		<p id="title-text">Try to answer the following code-related questions within the time limit. Keep in mind
+			that incorrect answers
+			will penalize your score/time by ten seconds!</p>
 		<button id="start">Start Quiz</button>
+
 	</main>
 	<main id="quizScreen" class="hide">
 		<h2 id="questionText"></h2>
-		<div id="container" ></div>
+		<div id="container"></div> <!-- answer buttons appear -->
 		<div id="message"></div>
 	</main>
 	<main id="endScreen" class="hide">
@@ -28,11 +36,12 @@
 	<main id="displayHighScores" class="hide">
 		<h2>High Scores</h2>
 		<div id="highScore">
-			
+
 		</div>
 		<button id="btnGoBack">Go Back</button>
 		<button id="btnClearHighScore">Clear High Score</button>
 	</main>
-    <script src="./asset/script.js"></script>
+	<script src="./asset/script.js"></script>
 </body>
+
 </html>

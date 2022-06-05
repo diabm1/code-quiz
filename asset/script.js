@@ -1,34 +1,47 @@
 //when start button is clicked timer starts then I am presented with a question
 var btn = document.querySelector("button");
-const btnGoBack=document.getElementById("btnGoBack");
-const btnClearHighScore=document.getElementById("btnClearHighScore");
+const btnGoBack = document.getElementById("btnGoBack");
+const btnClearHighScore = document.getElementById("btnClearHighScore");
 var intervalID;
 var questionsArray = [
   {
-    text: "Question 1",
-    choices: ["A", "B", "C", "D"],
-    answer: "B",
+    text: "Commonly used data types DO Not Include:",
+    choices: ["strings", "booleans", "alerts", "numbers"],
+    answer: "alerts",
   },
   {
-    text: "Question 2",
-    choices: ["A", "B", "C", "D"],
-    answer: "C",
+    text: "The condition in an if / else statement is enclosed with ________.",
+    choices: ["quotes", "curly brackets", "parenthesis", "square brackets"],
+    answer: "paranthesis",
   },
   {
-    text: "Question 3",
-    choices: ["A", "B", "C", "D"],
-    answer: "D",
+    text: "Arrays in JavaScript can be used to store ________.",
+    choices: [
+      "numbers and strings",
+      "other arrays",
+      "booleans",
+      "all of the above",
+    ],
+    answer: "all of the above",
+  },
+  {
+    text: "String values must be enclosed within ________ when being assigned to variables.",
+    choices: ["commas", "curly brackets", "quotes", "parenthesis"],
+    answer: "quotes",
+  },
+  {
+    text: "A very useful tool used during development and debugging for printing content to the debugger is:",
+    choices: ["JavaScript", "terminal/bash", "for loops", "console.log"],
+    answer: "console.log",
   },
 ];
-btnClearHighScore.addEventListener("click", function (){
+btnClearHighScore.addEventListener("click", function () {
   localStorage.removeItem("userAndScore");
 });
-btnGoBack.addEventListener("click", function (){
- // document.getElementById("startScreen").style.display="block";
-  document.getElementById("container").style.display="block";
-  document.getElementById("highScore").innerHTML="";
-  document.getElementById("displayHighScores").style.display="none";
-  //displayHighScores
+btnGoBack.addEventListener("click", function () {
+  document.getElementById("container").style.display = "block";
+  document.getElementById("highScore").innerHTML = "";
+  document.getElementById("displayHighScores").style.display = "none";
 });
 btn.addEventListener("click", function () {
   var startScreen = document.querySelector("#startScreen");
@@ -48,7 +61,7 @@ function buildQuesCard() {
   questionText.textContent = questionsArray[displayQues].text; //text == question
   var container = document.getElementById("container");
 
-  intervalID = setInterval(myCallback, 1000);
+  intervalID = setInterval(myCallback, 10000);
   var timer = document.querySelector(".time");
 
   function myCallback() {
@@ -58,34 +71,35 @@ function buildQuesCard() {
       showEndScreen();
     }
     countDown--;
-    document.getElementById("spanTimer").innerHTML=countDown;
+    document.getElementById("spanTimer").innerHTML = countDown;
   }
-  let i=1;
-  // console.log(questionsArray[0].choices)
-  questionsArray[displayQues].choices.forEach(function (choice) {
-    var button = document.createElement("button");
-    button.textContent =i+". "+ choice;
-    console.log(i, choice);
-    button.setAttribute("value", choice);
-    i++;
-    button.className="answerButton";
-    button.onclick = evaluateAnswer;
-    container.appendChild(button);
-    
-  });
+    let i = 1;
+    questionsArray[displayQues].choices.forEach(function (choice) {
+      var button = document.createElement("button");
+      button.textContent = i + ". " + choice;
+      button.setAttribute("value", choice);
+      i++;
+      button.className = "answerButton";
+      button.onclick = evaluateAnswer;
+      container.appendChild(button);
+    });
+  
+  
 }
 
 function evaluateAnswer() {
   if (this.value == questionsArray[displayQues].answer) {
-    console.log("correct");
+    
     document.getElementById("message").innerHTML = "<hr/>Correct!";
+    //add something here to go to next set of answers but hide previous answers
     countDown++;
   } else {
-    console.log("false");
     document.getElementById("message").innerHTML = "<hr/>Incorrect!";
-
+    //add something here to go to next set of answers but hide previous answers
     countDown--;
   }
+
+  //button.onClick = evaluateAnser && go to next question. Cycle through the object above how
 
   if (displayQues < questionsArray.length - 1) {
     displayQues++;
@@ -100,9 +114,6 @@ function evaluateAnswer() {
 function saveToLocalStorage() {
   var input = document.getElementById("initials");
   var timer = document.querySelector(".time");
-  //put object here; change from initials to something else
-  //input.value needs to be changed to an object. but what would that value consist of
-  // create user object from submission
   let userScores;
   const localStorageData = localStorage.getItem("userAndScore");
   if (localStorageData === null) {
@@ -114,7 +125,7 @@ function saveToLocalStorage() {
       userScores = [];
     }
   }
-  console.log(input.value);
+  // console.log(input.value);
   var userAndScore = {
     initials: input.value.trim(),
     time: timer.innerHTML.trim(),
@@ -128,30 +139,31 @@ function showHighScores() {
   //  jQuery $("#startScreen").hide();
   //get items from local storage
   const highScoreData = localStorage.getItem("userAndScore");
-  if(highScoreData==null)
-  {
+  if (highScoreData == null) {
     alert("No high scores found");
     //document.getElementById("displayHighScores").innerHTML="<h1>None</h1>";
-    return; 
+    return;
   }
   var highScoreScreen = document.querySelector("#displayHighScores");
   var endScreen = document.querySelector("#endScreen");
   highScoreScreen.removeAttribute("class", "hide");
   endScreen.setAttribute("class", "hide");
-  document.getElementById("startScreen").style.display="none";
-  document.getElementById("container").style.display="none";
-  document.getElementById("message").innerHTML="";
-  document.getElementById("displayHighScores").style.display="block";
+  document.getElementById("startScreen").style.display = "none";
+  document.getElementById("container").style.display = "none";
+  document.getElementById("message").innerHTML = "";
+  document.getElementById("displayHighScores").style.display = "block";
   const listOfScores = JSON.parse(highScoreData);
-  const highScoreId = document.getElementById("highScore")
+  const highScoreId = document.getElementById("highScore");
   //iterate through it
   for (let i = 0; i < listOfScores.length; i++) {
     const newDiv = document.createElement("div");
-    const newContent = document.createTextNode(listOfScores[i].initials + ":" + listOfScores[i].time);
+    const newContent = document.createTextNode(
+      listOfScores[i].initials + ":" + listOfScores[i].time
+    );
     newDiv.appendChild(newContent);
     // console.log(listOfScores[i])
-    console.log(newDiv)
-    highScoreId.appendChild(newDiv)
+    console.log(newDiv);
+    highScoreId.appendChild(newDiv);
   }
 
   //create element forEach
@@ -170,3 +182,5 @@ function showEndScreen() {
 
   //display endScreen
 }
+
+//testing git

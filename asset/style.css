@@ -1,49 +1,101 @@
 * {
-	margin: 0;
-	padding: 0;
+  margin: 0;
+  padding: 0;
 }
-body{
-	max-width: 800px;
-	margin: 0 auto;
-	font-family: Arial, Helvetica, sans-serif;
+body {
+  max-width: 800px;
+  margin: 0 auto;
+  font-family: Arial, Helvetica, sans-serif;
 }
-header{
-	/* border: 1px solid black; */
-	display: flex;
-	justify-content: space-between;
+header {
+  /* border: 1px solid black; */
+  display: flex;
+  justify-content: space-between;
 }
 main {
-	/* border: 1px solid black; */
-	text-align: center;
+  /* border: 1px solid black; */
+  text-align: center;
 }
-.hide{
-	display: none;
+.hide {
+  display: none;
 }
-#container{
-	border: 1px;width:200px;
-	position: absolute;
-	top:80px;
-	left:35%;
+#container {
+  border: 1px;
+  width: 200px;
+  position: absolute;
+  top: 80px;
+  left: 35%;
 }
 .answerButton {
-	background-color: blue;
-	font-size: larger;
-	color:white;
-	height: 30px;
-	width:200px;
-	display: inline-block;
-	text-align: left;
-	padding-left: 10px;
-	margin-bottom: 5px;
+  background-color: blue;
+  font-size: larger;
+  color: white;
+  height: 30px;
+  width: 200px;
+  display: inline-block;
+  text-align: left;
+  padding-left: 10px;
+  margin-bottom: 5px;
 }
-#message{
-	position: relative;
-	top:200px;
-	left:33%;
-	width: 400px;
-	color: gray;
-	font-style: italic;
-	font-size: larger;
-	text-align: left;
+/* #quizScreen{
+	display: flex;
+    height: 200px;
+    flex-direction: column;
+} */
+#message {
+  position:absolute;
+  top: 350px;
+  left: 33%;
+  width: 400px;
+  color: gray;
+  font-style: italic;
+  font-size: larger;
+  text-align: left;
 }
-
+#highScores {
+  text-decoration: none;
+  color: #b84fe5;
+}
+#title {
+  font-family: Arial, Helvetica, sans-serif;
+  font-size: 40px;
+  margin: 30px;
+}
+#title-text {
+  font-size: x-large;
+  margin-bottom: 30px;
+}
+#startScreen {
+  margin-top: 70px;
+}
+#start {
+  font-size: 20px;
+  padding: 10px;
+  padding-left: 30px;
+  padding-right: 30px;
+  background-color: #351b75;
+  color: #ffffff;
+  border-radius: 10px;
+}
+#start:hover {
+  background-color: #b84fe5;
+  opacity: 0.6;
+  transition: 0.3s;
+  cursor: pointer;
+}
+.answerButton {
+  font-size: 20px;
+  padding: 10px;
+  padding-left: 20px;
+  padding-right: 30px;
+  padding-bottom: 30px;
+  background-color: #351b75;
+  color: #ffffff;
+  border-radius: 10px;
+}
+.answerButton:hover {
+  background-color: #b84fe5;
+  opacity: 0.6;
+  transition: 0.3s;
+  cursor: pointer;
+}
