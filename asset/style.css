@@ -27,15 +27,21 @@ main {
   left: 35%;
 }
 .answerButton {
-  background-color: blue;
-  font-size: larger;
-  color: white;
+  background-color: #351b75;
+  font-size: 20px;
+  color: #ffffff;
+  border-radius: 10px;
   height: 30px;
   width: 200px;
   display: inline-block;
   text-align: left;
-  padding-left: 10px;
+  /* padding-left: 10px; */
   margin-bottom: 5px;
+  padding: 10px;
+  padding-left: 20px;
+  padding-right: 30px;
+  padding-bottom: 30px;
+  /* padding: auto; */
 }
 /* #quizScreen{
 	display: flex;
@@ -84,14 +90,7 @@ main {
   cursor: pointer;
 }
 .answerButton {
-  font-size: 20px;
-  padding: 10px;
-  padding-left: 20px;
-  padding-right: 30px;
-  padding-bottom: 30px;
-  background-color: #351b75;
-  color: #ffffff;
-  border-radius: 10px;
+  
 }
 .answerButton:hover {
   background-color: #b84fe5;

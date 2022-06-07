@@ -1,4 +1,3 @@
-# psudoecode for quiz
+# codeQuiz
 
-start screen with start button
-use js to load ques.
+An app that loads questions and answers for JavaScript 

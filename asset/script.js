@@ -33,15 +33,24 @@ var questionsArray = [
     text: "A very useful tool used during development and debugging for printing content to the debugger is:",
     choices: ["JavaScript", "terminal/bash", "for loops", "console.log"],
     answer: "console.log",
-  },
+  }
 ];
 btnClearHighScore.addEventListener("click", function () {
   localStorage.removeItem("userAndScore");
 });
 btnGoBack.addEventListener("click", function () {
-  document.getElementById("container").style.display = "block";
-  document.getElementById("highScore").innerHTML = "";
-  document.getElementById("displayHighScores").style.display = "none";
+  // document.getElementById("quizScreen").style.display = "block";
+  // var startScreen = document.querySelector("#startScreen");
+  // startScreen.removeAttribute("class", "hide");
+
+  location.reload();  
+
+  // document.getElementById("container").style.display = "block";
+  // document.getElementById("highScore").innerHTML = "";
+  // document.getElementById("displayHighScores").style.display = "none";
+  // displayQues = 0;
+  // buildQuesCard();
+
 });
 btn.addEventListener("click", function () {
   var startScreen = document.querySelector("#startScreen");
@@ -60,8 +69,8 @@ function buildQuesCard() {
   var questionText = document.getElementById("questionText");
   questionText.textContent = questionsArray[displayQues].text; //text == question
   var container = document.getElementById("container");
-
-  intervalID = setInterval(myCallback, 10000);
+  container.innerHTML = '';
+  intervalID = setInterval(myCallback, 1000);
   var timer = document.querySelector(".time");
 
   function myCallback() {
@@ -73,29 +82,24 @@ function buildQuesCard() {
     countDown--;
     document.getElementById("spanTimer").innerHTML = countDown;
   }
-    let i = 1;
-    questionsArray[displayQues].choices.forEach(function (choice) {
-      var button = document.createElement("button");
-      button.textContent = i + ". " + choice;
-      button.setAttribute("value", choice);
-      i++;
-      button.className = "answerButton";
-      button.onclick = evaluateAnswer;
-      container.appendChild(button);
-    });
-  
-  
+  let i = 1;
+  questionsArray[displayQues].choices.forEach(function (choice) {
+    var button = document.createElement("button");
+    button.textContent = i + ". " + choice;
+    button.setAttribute("value", choice);
+    i++;
+    button.className = "answerButton";
+    button.onclick = evaluateAnswer;
+    container.appendChild(button);
+  });
 }
 
 function evaluateAnswer() {
   if (this.value == questionsArray[displayQues].answer) {
-    
     document.getElementById("message").innerHTML = "<hr/>Correct!";
-    //add something here to go to next set of answers but hide previous answers
     countDown++;
   } else {
     document.getElementById("message").innerHTML = "<hr/>Incorrect!";
-    //add something here to go to next set of answers but hide previous answers
     countDown--;
   }
 
@@ -103,8 +107,9 @@ function evaluateAnswer() {
 
   if (displayQues < questionsArray.length - 1) {
     displayQues++;
-    var questionText = document.getElementById("questionText");
-    questionText.textContent = questionsArray[displayQues].text;
+    // var questionText = document.getElementById("questionText");
+    // questionText.textContent = questionsArray[displayQues].text;
+    buildQuesCard();
   } else {
     clearInterval(intervalID);
     showEndScreen();
